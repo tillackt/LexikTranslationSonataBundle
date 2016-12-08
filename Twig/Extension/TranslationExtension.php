@@ -50,7 +50,7 @@ class TranslationExtension extends BaseTranslationExtension
         return $this->getTranslator()->transChoice($message, $count, array_merge(array('%count%' => $count), $arguments), $domain, $locale);
     }
 
-    protected function validateTranslation($id, $domain = null, $locale = null)
+    protected function validateTranslation($message, $domain = null, $locale = null)
     {
         if (null === $locale) {
             $locale = $this->getTranslator()->getLocale();
@@ -62,14 +62,15 @@ class TranslationExtension extends BaseTranslationExtension
 
         if ($this->autoDiscover &&
             in_array($domain, $this->autoDomains) &&
-            !$this->translationExists($id, $domain, $locale)) {
+            !$this->translationExists($message, $domain, $locale) &&
+            !is_null($message)) {
 
-            $transUnit = $this->storage->getTransUnitByKeyAndDomain($id, $domain);
+            $transUnit = $this->storage->getTransUnitByKeyAndDomain($message, $domain);
             if (!$transUnit) {
-                $transUnit = $this->transUnitManager->create($id, $domain);
+                $transUnit = $this->transUnitManager->create($message, $domain);
             }
 
-            $this->transUnitManager->addTranslation($transUnit, $locale, $id, null, true);
+            $this->transUnitManager->addTranslation($transUnit, $locale, $message, null, true);
         }
     }
 
