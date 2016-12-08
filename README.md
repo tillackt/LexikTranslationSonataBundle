@@ -21,3 +21,16 @@ Register the bundle with your kernel:
 Then install the required assets:
 
     php app/console assets:install
+    
+Routing:
+    
+    lexik_translation_edition:
+        resource: "@LexikTranslationSonataBundle/Resources/config/routing.yml"
+        prefix:   /admin
+        
+Config:
+
+    lexik_translation:
+        fallback_locale: [nl]
+        managed_locales: [nl,fr,en]
+        base_layout: "LexikTranslationSonataBundle::translations_layout.html.twig"
