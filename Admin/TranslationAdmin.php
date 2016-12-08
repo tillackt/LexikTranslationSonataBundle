@@ -25,17 +25,18 @@ class TranslationAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
-    protected $accessMapping = array(
-        'translate' => 'EDIT',
-    );
-
-    /**
-     * {@inheritdoc}
-     */
     public function configureRoutes(RouteCollection $collection)
     {
         $collection->add('list', 'list', [
             '_controller' => 'LexikTranslationBundle:Translation:overview',
+        ]);
+
+        $collection->add('grid', 'grid', [
+            '_controller' => 'LexikTranslationBundle:Translation:grid',
+        ]);
+
+        $collection->add('new', 'new', [
+            '_controller' => 'LexikTranslationBundle:Translation:new',
         ]);
     }
 }
