@@ -49,8 +49,13 @@ class TranslationExtension extends BaseTranslationExtension
         if ($this->autoDiscover &&
             in_array($domain, $this->autoDomains) &&
             !$this->translationExists($id, $domain, $locale)) {
-            $transUnit = $this->transUnitManager->create($id, $domain, true);
-            $this->transUnitManager->addTranslation($transUnit, $locale, $id);
+
+            $transUnit = $this->storage->getTransUnitByKeyAndDomain($id, $domain);
+            if (!$transUnit) {
+                $transUnit = $this->transUnitManager->create($id, $domain);
+            }
+
+            $this->transUnitManager->addTranslation($transUnit, $locale, $id, null, true);
         }
 
         $translation = $this->getTranslator()->trans($id, $parameters, $domain, $locale);
@@ -61,15 +66,6 @@ class TranslationExtension extends BaseTranslationExtension
 
     protected function translationExists($id, $domain, $locale)
     {
-        if ($this->getTranslator()->getCatalogue($locale)->has((string) $id, $domain)) {
-            return true;
-        }
-
-        $transUnit = $this->storage->getTransUnitByKeyAndDomain($id, $domain);
-        if ($transUnit) {
-            return true;
-        }
-
-        return false;
+        return $this->getTranslator()->getCatalogue($locale)->has((string) $id, $domain);
     }
 }
