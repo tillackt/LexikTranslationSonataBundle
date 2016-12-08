@@ -36,7 +36,21 @@ class TranslationExtension extends BaseTranslationExtension
         $this->autoDomains = $autoDomains;
     }
 
-    public function trans($id, array $parameters = array(), $domain = null, $locale = null)
+    public function trans($message, array $arguments = array(), $domain = null, $locale = null)
+    {
+        $this->validateTranslation($message, $domain, $locale);
+
+        return $this->getTranslator()->trans($message, $arguments, $domain, $locale);
+    }
+
+    public function transchoice($message, $count, array $arguments = array(), $domain = null, $locale = null)
+    {
+        $this->validateTranslation($message, $domain, $locale);
+
+        return $this->getTranslator()->transChoice($message, $count, array_merge(array('%count%' => $count), $arguments), $domain, $locale);
+    }
+
+    protected function validateTranslation($id, $domain = null, $locale = null)
     {
         if (null === $locale) {
             $locale = $this->getTranslator()->getLocale();
@@ -57,10 +71,6 @@ class TranslationExtension extends BaseTranslationExtension
 
             $this->transUnitManager->addTranslation($transUnit, $locale, $id, null, true);
         }
-
-        $translation = $this->getTranslator()->trans($id, $parameters, $domain, $locale);
-
-        return $translation;
     }
 
 
