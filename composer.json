@@ -1,0 +1,26 @@
+{
+  "name": "pix-art/lexik-translation-sonata-bundle",
+  "description": "A Sonata bundle to create a lexik translation admin interface",
+  "keywords": [
+    "translations", "sonata"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Joeri Timmermans",
+      "email": "info@pix-art.be",
+      "homepage": "http://www.pix-art.be",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "lexik/translation-bundle": "~4.0",
+    "sonata-project/admin-bundle": "^3.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "LexikTranslationSonataBundle\\": "/"
+    }
+  }
+}
