@@ -34,3 +34,12 @@ Config:
         fallback_locale: [nl]
         managed_locales: [nl,fr,en]
         base_layout: "LexikTranslationSonataBundle::translations_layout.html.twig"
+        
+Auto Discovery:
+    
+This will transform you |trans function, to auto discover this translation if it's not found.
+Make sure the domain is declared if you want it auto discovered
+
+    lexik_translation_sonata:
+        auto_discover: true
+        auto_discover_domains: [messages]

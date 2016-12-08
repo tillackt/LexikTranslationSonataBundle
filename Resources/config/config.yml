@@ -1,0 +1,3 @@
+lexik_translation_sonata:
+    auto_discover: false
+    auto_discover_domains: []
