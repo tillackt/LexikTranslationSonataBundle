@@ -62,11 +62,14 @@ class TranslationExtension extends BaseTranslationExtension
             $locale = $this->getTranslator()->getLocale();
         }
 
+        if (!$locale = $this->validLocale($locale)) {
+            return;
+        }
+
         if ($this->autoDiscover &&
             in_array($domain, $this->autoDomains) &&
             !$this->translationExists($message, $domain, $locale) &&
-            !is_null($message) &&
-            in_array($locale, $this->localeManager->getLocales())
+            !is_null($message)
         ) {
 
             $transUnit = $this->storage->getTransUnitByKeyAndDomain($message, $domain);
@@ -78,6 +81,24 @@ class TranslationExtension extends BaseTranslationExtension
         }
     }
 
+    protected function validLocale($locale)
+    {
+        $locales = $this->localeManager->getLocales();
+
+        // Check if the locale exists
+        if (in_array($locale, $locales)) {
+            return $locale;
+        }
+
+        // Check if the locale exists as a locale_Country string
+        foreach ($locales as $validLocale) {
+            if(strpos($validLocale, $locale) !== false){
+                return $validLocale;
+            }
+        }
+
+        return false;
+    }
 
     protected function translationExists($id, $domain, $locale)
     {
