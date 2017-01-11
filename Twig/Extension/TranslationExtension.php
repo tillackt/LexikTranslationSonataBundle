@@ -2,6 +2,7 @@
 
 namespace LexikTranslationSonataBundle\Twig\Extension;
 
+use Lexik\Bundle\TranslationBundle\Manager\LocaleManagerInterface;
 use Lexik\Bundle\TranslationBundle\Manager\TransUnitManager;
 use Lexik\Bundle\TranslationBundle\Storage\StorageInterface;
 use Symfony\Bridge\Twig\Extension\TranslationExtension as BaseTranslationExtension;
@@ -21,10 +22,14 @@ class TranslationExtension extends BaseTranslationExtension
     /** @var array */
     private $autoDomains;
 
+    /** @var LocaleManagerInterface */
+    private $localeManager;
+
     public function __construct(
         TranslatorInterface $translator,
         TransUnitManager $transUnitManager,
         StorageInterface $storage,
+        LocaleManagerInterface $localeManager,
         $autoDiscover,
         $autoDomains,
         \Twig_NodeVisitorInterface $translationNodeVisitor = null)
@@ -34,6 +39,7 @@ class TranslationExtension extends BaseTranslationExtension
         $this->storage = $storage;
         $this->autoDiscover = $autoDiscover;
         $this->autoDomains = $autoDomains;
+        $this->localeManager = $localeManager;
     }
 
     public function trans($message, array $arguments = array(), $domain = null, $locale = null)
@@ -50,20 +56,18 @@ class TranslationExtension extends BaseTranslationExtension
         return $this->getTranslator()->transChoice($message, $count, array_merge(array('%count%' => $count), $arguments), $domain, $locale);
     }
 
-    protected function validateTranslation($message, $domain = null, $locale = null)
+    protected function validateTranslation($message, $domain = 'messages', $locale = null)
     {
         if (null === $locale) {
             $locale = $this->getTranslator()->getLocale();
         }
 
-        if (null === $domain) {
-            $domain = 'messages';
-        }
-
         if ($this->autoDiscover &&
             in_array($domain, $this->autoDomains) &&
             !$this->translationExists($message, $domain, $locale) &&
-            !is_null($message)) {
+            !is_null($message) &&
+            in_array($locale, $this->localeManager->getLocales())
+        ) {
 
             $transUnit = $this->storage->getTransUnitByKeyAndDomain($message, $domain);
             if (!$transUnit) {

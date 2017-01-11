@@ -16,6 +16,7 @@
             <argument type="service" id="translator" />
             <argument type="service" id="lexik_translation.trans_unit.manager" />
             <argument type="service" id="lexik_translation.translation_storage" />
+            <argument type="service" id="lexik_translation.locale.manager" />
             <argument>%lexik_translation_sonata.auto_discover%</argument>
             <argument>%lexik_translation_sonata.auto_discover_domains%</argument>
             <tag name="twig.extension"/>
