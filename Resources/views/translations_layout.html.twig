@@ -5,9 +5,14 @@
     <link rel="stylesheet" href="{{ asset('bundles/lexiktranslation/ng-table/ng-table.min.css') }}">
 {% endblock %}
 
+{% block content %}
+    {% block lexik_content %}
+    {% endblock %}
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
     <script src="{{ asset('bundles/lexiktranslation/ng-table/ng-table.min.js') }}"></script>
-    {% block javascript_footer %}{% endblock %}
+    {% block lexik_javascript_footer %}{% endblock %}
 {% endblock %}
