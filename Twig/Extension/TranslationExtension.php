@@ -56,10 +56,14 @@ class TranslationExtension extends BaseTranslationExtension
         return $this->getTranslator()->transChoice($message, $count, array_merge(array('%count%' => $count), $arguments), $domain, $locale);
     }
 
-    protected function validateTranslation($message, $domain = 'messages', $locale = null)
+    protected function validateTranslation($message, $domain = null, $locale = null)
     {
         if (null === $locale) {
             $locale = $this->getTranslator()->getLocale();
+        }
+
+        if (null === $domain) {
+            $domain = 'messages';
         }
 
         if (!$locale = $this->validLocale($locale)) {
