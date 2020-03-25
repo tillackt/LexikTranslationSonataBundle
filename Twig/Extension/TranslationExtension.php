@@ -42,7 +42,7 @@ class TranslationExtension extends BaseTranslationExtension
         $this->localeManager = $localeManager;
     }
 
-    public function trans($message, array $arguments = array(), $domain = null, $locale = null)
+    public function trans($message, array $arguments = array(), $domain = null, $locale = null, $count = null)
     {
         $this->validateTranslation($message, $domain, $locale);
 
