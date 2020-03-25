@@ -1,5 +1,5 @@
 {
-  "name": "tillackt/lexik-translation-sonata-bundle",
+  "name": "pix-art/lexik-translation-sonata-bundle",
   "description": "A Sonata bundle to create a lexik translation admin interface",
   "keywords": [
     "translations", "sonata"
